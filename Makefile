@@ -5,6 +5,10 @@ RUSTCFLAGS = "-Clink-args=-Wl,--build-id -C target-cpu=native "$(LINKER)
 
 all: debug
 
+about:
+	cargo about init
+	cargo about generate about.hbs > license.html
+
 fix:
 	cargo fix --allow-dirty
 
