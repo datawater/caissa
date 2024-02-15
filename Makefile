@@ -1,7 +1,7 @@
 THREADS = $(shell nproc --all)
 LINKER = $(shell if command -v mold   &> /dev/null; then echo \"-C link-arg=-fuse-ld=mold\"; \
 			   elif command -v ld.lld &> /dev/null; then echo \"-C link-arg=-fuse-ld=lld\"; fi)
-RUSTCFLAGS = "-C target-cpu=native "$(LINKER)
+RUSTCFLAGS = "-Clink-args=-Wl,--build-id -C target-cpu=native "$(LINKER)
 
 all: debug
 
