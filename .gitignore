@@ -1,2 +1,3 @@
 /target
 llvm-bolt-options.txt
+*.cmbr
