@@ -48,7 +48,7 @@ impl Visitor for PositionTable {
                 }
             };
 
-            *((*self.games.last_mut().unwrap()).pos.last_mut().unwrap()) =
+            *(self.games.last_mut().unwrap().pos.last_mut().unwrap()) =
                 match fen.into_position(CastlingMode::Chess960) {
                     Ok(pos) => pos,
                     Err(err) => {
@@ -58,7 +58,7 @@ impl Visitor for PositionTable {
                 }
         }
 
-        (*self.games.last_mut().unwrap()).headers.push(PgnHeaders {
+        self.games.last_mut().unwrap().headers.push(PgnHeaders {
             key: compress_prepend_size(key),
             value: compress_prepend_size(value.0),
         });
@@ -82,7 +82,7 @@ impl Visitor for PositionTable {
     }
 
     fn end_game(&mut self) -> Self::Result {
-        ()
+        
     }
 }
 

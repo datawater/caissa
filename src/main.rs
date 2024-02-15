@@ -1,5 +1,5 @@
-use std::{error::Error, fs::File};
 use std::io::Write;
+use std::{error::Error, fs::File};
 
 use argsparse::SubCommand;
 use pgn::PositionTable;
@@ -14,13 +14,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut pt: PositionTable = Default::default();
 
         pt.from_game(cli.state.convert_to.as_ref().unwrap().input_file.clone());
-    
+
         let output_file_path = cli.state.convert_to.as_ref().unwrap().outout_file.clone();
 
-        let mut output_file = File::create(if output_file_path == None {
+        let mut output_file = File::create(if output_file_path.is_none() {
             "output.txt".to_string() // TODO: Change this to use a proper file path.
         } else {
-            output_file_path.unwrap()  
+            output_file_path.unwrap()
         })?;
 
         writeln!(output_file, "{:?}", pt)?;

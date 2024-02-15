@@ -47,7 +47,7 @@ fn usage(subcommand: Option<String>) {
     println!("Version: {}", version::version!());
     println!("Authors: datawater\n");
 
-    if subcommand == None {
+    if subcommand.is_none() {
         println!("Usage:\n\tcaissa <command> [arguments]");
 
         println!("Avaliable commands:");
@@ -76,10 +76,10 @@ impl Cli {
         let mut args = args();
 
         let mut i = 0;
-        
+
         args.nth(0);
         let len = args.len();
-        
+
         while i < len {
             let arg = args.nth(0).unwrap();
 
@@ -117,10 +117,16 @@ impl Cli {
                 exit(0);
             }
 
-
             if arg == "-o" || arg == "--output" {
                 if se1f.subcommand == SubCommand::ConvertTo {
-                    if se1f.state.convert_to.as_ref().unwrap().outout_file.is_some() {
+                    if se1f
+                        .state
+                        .convert_to
+                        .as_ref()
+                        .unwrap()
+                        .outout_file
+                        .is_some()
+                    {
                         eprintln!(
                             "Output file provided more than once. Run `caissa --help` for help."
                         );
@@ -128,9 +134,7 @@ impl Cli {
                     }
 
                     se1f.state.convert_to.as_mut().unwrap().outout_file = match args.nth(0) {
-                        Some(filename) => {
-                            Some(filename)
-                        }
+                        Some(filename) => Some(filename),
 
                         None => {
                             eprintln!("No input file provided after the output flag. Run `caissa --help` for help.");
@@ -150,7 +154,7 @@ impl Cli {
 
             if Path::new(&arg).exists() {
                 if se1f.subcommand == SubCommand::ConvertTo {
-                    if se1f.state.convert_to.as_ref().unwrap().input_file.len() != 0 {
+                    if !se1f.state.convert_to.as_ref().unwrap().input_file.is_empty() {
                         eprintln!(
                             "Multiple Input files supplied when only one is expected. Run `caissa --help` for help."
                         );
