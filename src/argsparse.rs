@@ -1,4 +1,4 @@
-#![allow(private_interfaces, dead_code)]
+#![allow(dead_code)]
 
 use std::env::args;
 
@@ -154,7 +154,14 @@ impl Cli {
 
             if Path::new(&arg).exists() {
                 if se1f.subcommand == SubCommand::ConvertTo {
-                    if !se1f.state.convert_to.as_ref().unwrap().input_file.is_empty() {
+                    if !se1f
+                        .state
+                        .convert_to
+                        .as_ref()
+                        .unwrap()
+                        .input_file
+                        .is_empty()
+                    {
                         eprintln!(
                             "Multiple Input files supplied when only one is expected. Run `caissa --help` for help."
                         );

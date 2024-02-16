@@ -81,16 +81,17 @@ impl Visitor for PositionTable {
         last_game.pos.last_mut().unwrap().play_unchecked(&san)
     }
 
-    fn end_game(&mut self) -> Self::Result {
-        
-    }
+    fn end_game(&mut self) -> Self::Result {}
 }
 
 impl PositionTable {
-    pub fn from_game(&mut self, game: String) {
+    pub fn from_pgn_database(game: String) -> Self {
+        let mut se1f = Default::default();
+
         let file = File::open(game).unwrap();
         let mut reader = BufferedReader::new(Box::new(file));
 
-        reader.read_all(self).unwrap();
+        reader.read_all(&mut se1f).unwrap();
+        se1f
     }
 }
